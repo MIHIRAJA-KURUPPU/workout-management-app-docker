@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workout Management</title>
+    <link rel="stylesheet" href="../static/CSS/style_admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>WORKOUT MANAGEMENT SYSTEM</h1>
+        <h2>Welcome to the Admin Dashboard!</h2>
+    </header>
+
+    <main>
+        <div class="search-container">
+            <form class="search-form" action="/search" method="GET">
+                <input type="text" name="query" class="search-input" placeholder="Search workouts...">
+                <button type="submit" class="search-button">Search</button>
+            </form>
+        </div>
+
+        <!-- Add Workout Button (Hidden During Search) -->
+        {% if not query %}
+            <a href="{{ url_for('add_workout') }}" class="add-box-link">
+                <div class="add-box">
+                    ADD NEW WORKOUT +
+                </div>
+            </a>
+        {% endif %}
+
+        <!-- Search Results Header and Back Button -->
+        {% if query %}
+            <div class="search-results-header">
+                <a href="/" class="back-button">Back to All Workouts</a>
+                <h2>Search results for: "{{ query }}"</h2>
+            </div>
+        {% endif %}
+    </main>
+
+    </div>
+        <!-- Display Exercises -->
+        <div class="container">
+            {% if exercises and exercises|length > 0 %}
+                <div class="imgcontainer">
+                    {% for exercise in exercises %}
+                        <div class="exercise-item">
+                            <h2>{{ exercise.name }}</h2>
+                            <img src="{{ exercise.image_path }}" alt="{{ exercise.name }}" style="max-width: 100%; border-radius: 10px;">
+                            <a href="{{ url_for('admin_view', id=exercise.exercise_id) }}" class="view-button">View More</a>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="no-exercises-message">
+                    {% if query %}
+                        No exercises found matching.
+                    {% else %}
+                        No exercises have been added yet. Add some to see them here!
+                    {% endif %}
+                </p>
+            {% endif %}
+        </div>
+    
+</body>
+</html>

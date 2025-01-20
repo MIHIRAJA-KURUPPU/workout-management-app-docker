@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workout Exercise Form</title>
+    <link rel="stylesheet" href="../static/CSS/style_add.css">  
+</head>
+<body>
+    <div class="container">
+        <h1>Enter New Exercise</h1>
+        <form action="/add" method="POST" enctype="multipart/form-data">
+
+            
+            <div class="form-group">
+                <label for="name">Exercise Name:</label>
+                <input type="text" id="name" name="name" placeholder="Enter exercise name" required>
+            </div>
+        
+            <!-- Target Muscle Group -->
+            <div class="form-group">
+                <label for="target">Target Muscle Group:</label>
+                <select id="target" name="target" required>
+                    <option value="">Select Muscle Group</option>
+                    <option value="Chest">Chest</option>
+                    <option value="Back">Back</option>
+                    <option value="Legs">Legs</option>
+                    <option value="Arms">Arms</option>
+                    <option value="Shoulders">Shoulders</option>
+                    <option value="Core">Core</option>
+                </select>
+            </div>
+        
+            <!-- Exercise Type (Radio Buttons) -->
+            <div class="form-group">
+                <label for="etype">Exercise Type:</label>
+                <div>
+                    <input type="radio" id="strength" name="etype" value="Strength" required>
+                    <label for="strength">Strength</label>
+                </div>
+                <div>
+                    <input type="radio" id="cardio" name="etype" value="Cardio" required>
+                    <label for="cardio">Cardio</label>
+                </div>
+                <div>
+                    <input type="radio" id="flexibility" name="etype" value="Flexibility" required>
+                    <label for="flexibility">Flexibility</label>
+                </div>
+            </div>
+        
+            <!-- Equipment Needed (Checkboxes) -->
+            <div class="form-group">
+                <label for="equipment_needed">Equipment Needed:</label>
+                <div>
+                    <input type="checkbox" id="dumbbells" name="equipment_needed[]" value="Dumbbells">
+                    <label for="dumbbells">Dumbbells</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="barbell" name="equipment_needed[]" value="Barbell">
+                    <label for="barbell">Barbell</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="mat" name="equipment_needed[]" value="Mat">
+                    <label for="mat">Mat</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="no_equipment" name="equipment_needed[]" value="No Equipment">
+                    <label for="no_equipment">No Equipment</label>
+                </div>
+            </div>
+        
+            <!-- Reps & Sets -->
+            <div class="form-group">
+                <label for="reps">Reps & Sets:</label>
+                <input type="text" id="reps" name="reps" placeholder="e.g. 3 sets of 15 reps" required>
+            </div>
+        
+            <!-- Technique Description -->
+            <div class="form-group">
+                <label for="technique">Technique Description:</label>
+                <textarea id="technique" name="technique" rows="4" placeholder="Enter exercise technique" required></textarea>
+            </div>
+        
+            <!-- Upload Exercise Image -->
+            <div class="form-group">
+                <label for="image">Upload Exercise Image:</label>
+                <input type="file" id="image" name="image" accept="image/*" required>
+                <!-- This will display the file name in some browsers after selecting -->
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit">Add Exercise</button>
+        </form>
+    </div>
+</body>
+</html>

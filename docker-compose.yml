@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16.6
+    container_name: postgres-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 20010209
+      POSTGRES_DB: workout
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - workout-net
+
+  app:
+    image: workout-app
+    container_name: workout-app
+    build: .
+    ports:
+      - "5000:5000"
+    depends_on:
+      - postgres
+    networks:
+      - workout-net
+
+networks:
+  workout-net:
+    driver: bridge
+ 
+volumes:
+  db_data:

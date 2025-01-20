@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ exercise.name }} Details</title>
+    <link rel="stylesheet" href="../static/CSS/admin_view.css">
+</head>
+<body>
+    <div class="exercise-details">
+        <a href="{{ url_for('admin_dashboard') }}" class="back-button">Back</a>
+        <h1>{{ exercise.name }}</h1>
+        <img src="{{ url_for('static', filename=exercise.image_path.split('static/')[1]) }}" alt="{{ exercise.name }}" style="max-width: 100%; border-radius: 10px;">
+
+        <p><strong>Target Muscle Group:</strong> {{ exercise.target }}</p>
+        <p><strong>Exercise Type:</strong> {{ exercise.etype }}</p>
+        <p><strong>Equipment Needed:</strong> {{ exercise.needs }}</p>
+        <p><strong>Reps & Sets:</strong> {{ exercise.reps }}</p>
+        <p><strong>Technique Description:</strong> {{ exercise.technique }}</p>
+
+
+        <div class="action-buttons">
+            <a href="{{ url_for('update_exercise', exercise_id=exercise.exercise_id) }}" class="update-button">Update</a>
+            <!--  <form action="{{ url_for('delete_exercise', exercise_id=exercise.exercise_id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this exercise?');"> -->
+            
+            <form action="{{ url_for('delete_exercise', exercise_id=exercise.exercise_id) }}" method="POST">
+                <button type="submit" class="delete-button">Delete</button>
+            </form>
+        </div>
+
+
+        
+    </div>
+</body>
+</html>

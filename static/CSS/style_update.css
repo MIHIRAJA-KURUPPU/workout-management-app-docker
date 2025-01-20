@@ -1,0 +1,127 @@
+/* Global Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-image: url('../images/background_add.jpg'); /* Ensure correct path */
+    background-size: cover; /* Covers the entire background */
+    background-position: center; /* Centers the background image */
+    background-attachment: fixed; /* Keeps the background fixed when scrolling */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 100vh;
+    box-sizing: border-box;
+    color: #fff; /* Ensures text is readable on background */
+}
+
+
+/* Container for center alignment */
+.container {
+    width: 100%;
+    max-width: 600px;
+    padding: 30px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Centers text content inside the container */
+    box-sizing: border-box;
+    margin-top: 20px;
+}
+
+/* Header */
+h1 {
+    font-size: 2.5rem;
+    color: #4CAF50;
+    margin: 0;
+    padding: 10px 0;
+    line-height: 1.2;
+}
+
+/* Form Styling */
+form {
+    padding: 30px;
+    margin: 0 auto;
+    text-align: left;
+    max-width: 600px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Form groups */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* Label Styling */
+label {
+    font-size: 1.1rem;
+    color: #555;
+    font-weight: bold;
+    margin-bottom: 8px;
+    display: block; /* Ensures each label occupies its own line */
+}
+
+/* Input, Textarea, and Select Styling */
+input[type="text"],
+input[type="file"],
+textarea,
+select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0 20px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* Styling for radio and checkbox inputs */
+input[type="radio"],
+input[type="checkbox"] {
+    margin-right: 10px;
+    margin-left: 5px;
+    vertical-align: middle; /* Aligns the radio/checkbox inputs with the text */
+}
+
+/* Styling for radio/checkbox labels */
+.form-group div {
+    margin-bottom: 10px;
+}
+
+.form-group div label {
+    font-size: 1rem;
+    font-weight: normal;
+    color: #333;
+    display: inline-block;
+}
+
+/* Button Styling */
+button {
+    background-color: #4CAF50;
+    color: white;
+    font-size: 1.1rem;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Ensure proper spacing between form groups */
+.form-group {
+    margin-bottom: 15px;
+}

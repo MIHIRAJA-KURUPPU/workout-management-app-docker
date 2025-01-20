@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ 'Success' if status == 'success' else 'Failed'}}</title>
+    <link rel="stylesheet" href="../static/CSS/style_success.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="{{ 'success' if status == 'success' else 'failed' }}">{{message}}</h1>
+
+        {% if details %}
+            <div class="exercise-details">
+                <h2>Exercise Details</h2>
+                <p><strong>Name:</strong> {{ details['name'] }}</p>
+                <p><strong>Target Muscle Group:</strong> {{ details['target'] }}</p>
+                <p><strong>Exercise Type:</strong> {{ details['etype'] }}</p>
+                <p><strong>Equipment Needed:</strong> {{ details['needs'] }}</p>
+                <p><strong>Number of Reps & Sets:</strong> {{ details['reps'] }}</p>
+                <p><strong>Technique:</strong> {{ details['technique'] }}</p>
+                {% if details['image_path'] %}
+                    <img src="../{{ details['image_path'] }}" alt="Exercise Image" style="max-width: 100%; border-radius: 10px;">
+                    
+                {% endif %}
+            </div>
+        {% endif %}
+
+        <a href="/" class="button">Go to Home</a>
+    </div>
+</body>
+</html>
