@@ -1,4 +1,4 @@
-# workout_management_application - Docker Setup
+# Workout_Management_Application - Docker Setup
 
 This repository contains the necessary files and configuration to run a Workout app and PostgreSQL database using Docker.
 
