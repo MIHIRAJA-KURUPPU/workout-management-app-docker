@@ -17,7 +17,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo "Checking out source code from: ${GITHUB_REPO}"
+                echo "Checking out source code from: ${env.GITHUB_REPO}"
                 checkout scm
                 sh 'ls -la'
             }
@@ -26,12 +26,12 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    echo "Building Docker image: ${DOCKER_IMAGE}:${DOCKER_TAG}"
+                    echo "Building Docker image: ${env.DOCKER_IMAGE}:${env.DOCKER_TAG}"
                     sh """
                         docker version
                         docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} .
                     """
-                    echo "Docker image build completed: ${DOCKER_IMAGE}:${DOCKER_TAG}"
+                    echo "Docker image build completed: ${env.DOCKER_IMAGE}:${env.DOCKER_TAG}"
                 }
             }
         }
@@ -42,12 +42,11 @@ pipeline {
                     echo "Logging into Docker Hub and pushing image..."
                     withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                         sh """
-                            echo "DockerHub Username: \$DOCKER_USER"
                             echo "\$DOCKER_PASS" | docker login -u "\$DOCKER_USER" --password-stdin
                             docker push ${DOCKER_IMAGE}:${DOCKER_TAG}
                         """
                     }
-                    echo "Image pushed successfully: ${DOCKER_IMAGE}:${DOCKER_TAG}"
+                    echo "Image pushed successfully: ${env.DOCKER_IMAGE}:${env.DOCKER_TAG}"
                 }
             }
         }
@@ -55,7 +54,7 @@ pipeline {
         stage('Prepare Docker Environment') {
             steps {
                 script {
-                    echo "Preparing Docker network and volume..."
+                    echo "Preparing Docker network and volumes..."
                     sh """
                         docker volume create ${POSTGRES_VOLUME} || true
                         docker volume create ${IMAGE_VOLUME} || true
@@ -64,7 +63,7 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Deploy PostgreSQL') {
             steps {
                 script {
@@ -86,14 +85,14 @@ pipeline {
                 }
             }
         }
-
+    }
 
     post {
         success {
-            echo "Pipeline completed successfully."
+            echo '✅ Pipeline completed successfully.'
         }
         failure {
-            echo "Pipeline failed! Please check the logs above for more details."
+            echo '❌ Pipeline failed! Please check the logs above for more details.'
         }
     }
 }
