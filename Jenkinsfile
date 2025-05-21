@@ -5,6 +5,8 @@ pipeline {
         GITHUB_REPO = 'https://github.com/MIHIRAJA-KURUPPU/workout-management-app-docker'
         DOCKER_IMAGE = 'mihirajakuruppu123/workout-app-new'
         DOCKER_TAG = "${env.BUILD_NUMBER}"
+        POSTGRES_VOLUME = "postgres-data-volume"
+        IMAGE_VOLUME = "app-image-volume"
     }
 
     stages {
@@ -12,7 +14,7 @@ pipeline {
             steps {
                 echo "Checking out source code from: ${GITHUB_REPO}"
                 checkout scm
-                sh 'ls -la'  // List files after checkout
+                sh 'ls -la'  
             }
         }
 
@@ -43,6 +45,18 @@ pipeline {
                     echo "Image pushed successfully: ${DOCKER_IMAGE}:${DOCKER_TAG}"
                 }
             }
+
+        stage('Prepare Docker Environment') {
+            steps {
+                script {
+                    echo "Preparing Docker network and volume..."
+                    sh """
+                        docker volume create ${POSTGRES_VOLUME} || true
+                        docker network inspect ${DOCKER_NETWORK} >/dev/null 2>&1 || docker network create --driver bridge ${DOCKER_NETWORK}
+                    """
+                    }
+            }
+        }
         }
     }
 
