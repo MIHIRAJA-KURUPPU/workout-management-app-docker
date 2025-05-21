@@ -1,3 +1,4 @@
+
 pipeline {
     agent any
 
@@ -7,6 +8,7 @@ pipeline {
         DOCKER_TAG = "${env.BUILD_NUMBER}"
         POSTGRES_VOLUME = "postgres-data-volume"
         IMAGE_VOLUME = "app-image-volume"
+        DOCKER_NETWORK = "workout-network"
     }
 
     stages {
@@ -14,7 +16,7 @@ pipeline {
             steps {
                 echo "Checking out source code from: ${GITHUB_REPO}"
                 checkout scm
-                sh 'ls -la'  
+                sh 'ls -la'
             }
         }
 
@@ -45,6 +47,7 @@ pipeline {
                     echo "Image pushed successfully: ${DOCKER_IMAGE}:${DOCKER_TAG}"
                 }
             }
+        }
 
         stage('Prepare Docker Environment') {
             steps {
@@ -54,9 +57,8 @@ pipeline {
                         docker volume create ${POSTGRES_VOLUME} || true
                         docker network inspect ${DOCKER_NETWORK} >/dev/null 2>&1 || docker network create --driver bridge ${DOCKER_NETWORK}
                     """
-                    }
+                }
             }
-        }
         }
     }
 
