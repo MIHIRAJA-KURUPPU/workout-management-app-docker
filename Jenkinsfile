@@ -9,6 +9,9 @@ pipeline {
         POSTGRES_VOLUME = "postgres-data-volume"
         IMAGE_VOLUME = "app-image-volume"
         DOCKER_NETWORK = "workout-network"
+        POSTGRES_CONTAINER_NAME = 'postgres-container'
+        POSTGRES_DB = 'workout'
+        POSTGRES_IMAGE = 'postgres:16.2'
     }
 
     stages {
@@ -55,12 +58,35 @@ pipeline {
                     echo "Preparing Docker network and volume..."
                     sh """
                         docker volume create ${POSTGRES_VOLUME} || true
+                        docker volume create ${IMAGE_VOLUME} || true
                         docker network inspect ${DOCKER_NETWORK} >/dev/null 2>&1 || docker network create --driver bridge ${DOCKER_NETWORK}
                     """
                 }
             }
         }
-    }
+        
+        stage('Deploy PostgreSQL') {
+            steps {
+                script {
+                    echo "Deploying PostgreSQL container..."
+                    withCredentials([usernamePassword(credentialsId: 'postgres-creds', usernameVariable: 'POSTGRES_USER', passwordVariable: 'POSTGRES_PASSWORD')]) {
+                        sh """
+                            docker rm -f ${POSTGRES_CONTAINER_NAME} || true
+                            docker run -d \\
+                                --name ${POSTGRES_CONTAINER_NAME} \\
+                                --network ${DOCKER_NETWORK} \\
+                                -e POSTGRES_USER=\$POSTGRES_USER \\
+                                -e POSTGRES_PASSWORD=\$POSTGRES_PASSWORD \\
+                                -e POSTGRES_DB=${POSTGRES_DB} \\
+                                -p 5432:5432 \\
+                                -v ${POSTGRES_VOLUME}:/var/lib/postgresql/data \\
+                                ${POSTGRES_IMAGE}
+                        """
+                    }
+                }
+            }
+        }
+
 
     post {
         success {
