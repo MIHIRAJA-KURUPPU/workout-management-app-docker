@@ -106,7 +106,7 @@ pipeline {
                             -e DB_USER=\${POSTGRES_USER} \\
                             -e DB_PASSWORD=\${POSTGRES_PASSWORD} \\
                             -e DATABASE_URL="postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_CONTAINER_NAME}:5432/${POSTGRES_DB}" \
-                            -p 8080:5000 \\
+                            -p 5000:5000 \\
                             -v \${IMAGE_VOLUME}:/app/images \\
                             \${DOCKER_IMAGE}:\${DOCKER_TAG}
 
