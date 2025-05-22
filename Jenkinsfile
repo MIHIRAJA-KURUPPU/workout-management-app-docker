@@ -108,17 +108,17 @@ pipeline {
                         sh "chmod +x deploy.sh"
 
                         // Copy the deployment script to the OCI instance
-                        sh "scp -i \${SSH_KEY} -o StrictHostKeyChecking=no deploy.sh \${params.OCI_USER}@\${params.OCI_HOST}:/tmp/deploy.sh"
+                        sh "scp -i ${SSH_KEY} -o StrictHostKeyChecking=no deploy.sh ${params.OCI_USER}@${params.OCI_HOST}:/tmp/deploy.sh"
 
                         // Execute the deployment script on the OCI instance
                         withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                             sh """
-                                ssh -i \${SSH_KEY} -o StrictHostKeyChecking=no \${params.OCI_USER}@\${params.OCI_HOST} "bash /tmp/deploy.sh '\${POSTGRES_USER}' '\${POSTGRES_PASSWORD}' '\${DOCKER_PASS}' '\${DOCKER_USER}'"
+                                ssh -i ${SSH_KEY} -o StrictHostKeyChecking=no ${params.OCI_USER}@${params.OCI_HOST} "bash /tmp/deploy.sh '${POSTGRES_USER}' '${POSTGRES_PASSWORD}' '${DOCKER_PASS}' '${DOCKER_USER}'"
                             """
                         }
 
                         // Remove the temporary script from OCI instance
-                        sh "ssh -i \${SSH_KEY} -o StrictHostKeyChecking=no \${params.OCI_USER}@\${params.OCI_HOST} 'rm /tmp/deploy.sh'"
+                        sh "ssh -i ${SSH_KEY} -o StrictHostKeyChecking=no ${params.OCI_USER}@${params.OCI_HOST} 'rm /tmp/deploy.sh'"
                     }
                 }
             }
